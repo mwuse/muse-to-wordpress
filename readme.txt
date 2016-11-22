@@ -10,11 +10,11 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A starter theme called Muse-to-Wordpress.com, or underscores.
 
 == Description ==
 
-This is not really a theme you need Adobe Muse software to customize you theme
+Make your own WordPress theme with Adobe Muse without coding.
+This is not really a WordPress theme, you need Adobe Muse software to customize you theme.
 
 == Installation ==
 	
@@ -22,7 +22,7 @@ This is not really a theme you need Adobe Muse software to customize you theme
 2. Click Upload and Choose File, then select the theme's .zip file. Click Install Now.
 3. Click Activate to use your new theme right away.
 4. At the root of you WordPress installation you can see a new folder: mtw-themes
-5. create a new folder for your project in mtw-themes (ex: mtw-themes/my-project)
+5. Create a new folder for your project in mtw-themes (ex: mtw-themes/my-project)
 4. In Adobe Muse : exporte as HTML in your new folder
 
 see more on
