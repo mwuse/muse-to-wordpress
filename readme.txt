@@ -21,12 +21,18 @@ This is not really a theme you need Adobe Muse software to customize you theme
 1. In your admin panel, go to Appearance > Themes and click the Add New button.
 2. Click Upload and Choose File, then select the theme's .zip file. Click Install Now.
 3. Click Activate to use your new theme right away.
+4. At the root of you WordPress installation you can see a new folder: mtw-themes
+5. create a new folder for your project in mtw-themes (ex: mtw-themes/my-project)
+4. In Adobe Muse : exporte as HTML in your new folder
+
+see more on
+http://musetowordpress.com/installation/
 
 
 == Changelog ==
 
-= 1.0 - Nov 09 2016 =
-* Initial release
+= 1.0 - Nov 2016 = * Initial release
+
 
 == Credits ==
 
