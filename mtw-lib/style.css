@@ -1,0 +1,60 @@
+#ttr-muse-to-wordpress-tabs, #ttr-muse-to-wordpress-tabs .ui-widget-header{
+	background: none !important;
+	border: none !important;
+}
+#ttr-muse-to-wordpress-tabs .ui-tabs-panel {
+	background: #FFFFFF;
+	border-left: 1px solid #AAA;
+}
+
+#ttr-muse-to-wordpress-tabs .ui-tabs-nav{
+	padding: 0px !important;
+}
+
+
+.mtw_table_project{
+	width: 100%;
+	border-collapse: collapse;
+}
+.mtw_table_project a{
+	color: DodgerBlue;
+}
+.mtw_table_project a:hover{
+	color: MidnightBlue;
+}
+.mtw_table_project, .mtw_table_project th, .mtw_table_project td{
+	border:1px solid #C1C4B9;
+}
+.mtw_table_project th, .mtw_table_project td{
+	padding: 10px;
+}
+.mtw_table_project tr:first-child th{
+	font-size: 22px;
+	font-weight: normal;
+	width: 50%;
+}
+.mtw_table_project tr:nth-child(2n+3){
+	background: #F5F7FA;
+}
+.mtw_table_project tr td:last-child{
+	padding-bottom: 5px;
+}
+
+.mtw_table_project .inline{
+	display: inline-block;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+form.links-manager table, form.links-manager table input {
+	width: 100%;
+}
+form.links-manager table input {
+	min-width: 200px;
+}
+
+.sticky{}
+
+.gallery-caption{}
+
+.bypostauthor{}

@@ -1,0 +1,46 @@
+.wp-content strong{
+	font-weight: bold;
+}
+.wp-content em{
+	font-style: italic;
+}
+
+.wp-content ul li, .wp-content ol li{
+	margin-left: 15px;
+	list-style: inherit;
+	
+}
+.wp-content ul, .wp-content ol{
+	display: block;
+	width: 100%;
+	margin-bottom: 15px;
+	list-style: disc;
+}
+.wp-content ol{
+	list-style: decimal;
+}
+
+.wp-content p{
+	margin-bottom: 15px;
+}
+
+.wp-content blockquote {
+  	background: #f9f9f9;
+  	padding: 15px 0px 15px;
+  	margin-bottom: 15px;
+}
+.wp-content blockquote:before {
+	color: #ccc;
+	content: open-quote;
+	font-size: 4em;
+	line-height: 0.1em;
+	margin: 0px 15px;
+	vertical-align: -0.4em;
+}
+.wp-content blockquote p {
+	display: inline;
+}
+
+.wp-content del{
+	text-decoration: line-through !important;
+}
