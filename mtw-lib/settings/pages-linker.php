@@ -45,7 +45,7 @@ function ttr_page_linker(){
 		If you have only one muse project you can either put it in a folder or leave it at the root of the zip file.</i></p>
 	</div>-->
 
-	<a href="?page=mtw-projects&update_all_logic_links=1" class="button">Update all links</a><br/><br/>
+	<a href="?page=muse-to-wordpress-setting&update_all_logic_links=1" class="button">Update all links</a><br/><br/>
 
 	<script>
 		
