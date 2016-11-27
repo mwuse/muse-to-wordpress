@@ -190,5 +190,9 @@ function mtw_sync_muse_page()
 	
 }
 
-add_action( 'wp_loaded', 'mtw_sync_muse_page', 2 );
+function mtw_wp_loaded_admin()
+{
+	add_action( 'wp_loaded', 'mtw_sync_muse_page', 2 );
+}
+add_action( 'admin_init', 'mtw_wp_loaded_admin' );
 ?>

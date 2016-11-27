@@ -16,7 +16,7 @@ function mtw_load_xd_template()
 	global $wp_filesystem;
 	WP_Filesystem();
 
-	if( isset( $_GET['mtw-unzip-template'] ) )
+	if( isset( $_GET['mtw-unzip-template'] ) && wp_mkdir_p( TTR_MW_PLUGIN_DIR . 'zip-template' ) )
 	{
 		if( $_GET['mtw-unzip-template'] == "XD.zip" )
 		{
