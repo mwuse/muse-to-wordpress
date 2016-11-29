@@ -197,7 +197,7 @@ included in a init action of Wordpress
 
 	}
 
-	$ver = '2.4';
+	$ver = '2.6';
 	
 	foreach ( glob( $mtw_content_path . "/*.php" ) as $file ) 
 	{ 

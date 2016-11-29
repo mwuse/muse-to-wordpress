@@ -52,7 +52,7 @@ function mtw_xd_template_instruction()
 	?>
 	<div class="updated notice is-dismissible mtw-notice" id="mtw-xd-template-instruction-notice">
 	    <p><?php _e( 'You can use <b>Synchronize Muse and Wordpress Pages</b> for create Wordpress pages automatically', 'muse-to-wordpress' ); ?></p>
-	    <p><a href="http://muse-to-wordpress.net/templates/XD.zip"><?php _e( 'Download XD Adobe Muse files to modify this or create our first template.', 'muse-to-wordpress' ); ?></a></p>
+	    <p><a href="http://musetowordpress.com/shop/xd/"><?php _e( 'Download XD Adobe Muse files to modify this or create our first template.', 'muse-to-wordpress' ); ?></a></p>
 	</div>
 	<?php
 }
@@ -150,7 +150,7 @@ function mtw_check_plugins_required( $mtw_page )
 	
 	$finder = new DomXPath($mtw_page->DOMDocument);
 	$name = "plugin_requier";
-	$results = $finder->query("//meta[@name='plugin_requier']");
+	$results = $finder->query("//meta[@name='plugin_require']");
 
 	$plugin_requier_options[$mtw_page->file_url] = array();
 
