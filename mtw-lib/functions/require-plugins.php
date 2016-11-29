@@ -102,27 +102,10 @@ function muse_to_wordpress_xd_register_required_plugins()
 {
    if( is_admin() )
    {
-      $mtw_option = get_option( 'mtw_option' );
-      $plugins = array();
 
-      if( $mtw_option['mtw_default_project'] == "XD" )
-      {
+    $mtw_option = get_option( 'mtw_option' );
+    $plugins = array();
 
-         $plugins = array(
-            array(
-               'name'      => 'WP Better Attachments',
-               'slug'      => 'wp-better-attachments',
-               'required'  => false,
-            ),
-            array(
-               'name'      => '[MTW] Slideshow Attachements',
-               'slug'      => 'mtw-slideshow-attachements',
-               'source'    => 'http://muse-to-wordpress.net/plugins/mtw-slideshow-attachements.zip',
-               'version'   => '1.0.0',
-               'required'  => false,
-            ),
-         );
-      }
 
 	global $wp_filesystem;
 	WP_Filesystem();
@@ -134,15 +117,25 @@ function muse_to_wordpress_xd_register_required_plugins()
 		$plugins = array_merge( $plugins , $mtw_require_array );
 	}
 
+	$MTW_plugins_requier = get_option( "MTW_plugins_requier", array() );
+
+	foreach ($MTW_plugins_requier as $key => $MTW_plugin_requier) 
+	{
+		if( !empty($MTW_plugin_requier) )
+		{
+			$plugins = array_merge( $plugins, $MTW_plugin_requier);
+		}
+	}
+
 
       $config = array(
          'id'           => 'muse-to-wordpress',     // Unique ID for hashing notices for multiple instances of TGMPA.
          'default_path' => '',                      // Default absolute path to bundled plugins.
          'menu'         => 'mtw-install-plugins', // Menu slug.
          'has_notices'  => true,                    // Show admin notices or not.
-         'dismissable'  => true,                    // If false, a user cannot dismiss the nag message.
+         'dismissable'  => false,                    // If false, a user cannot dismiss the nag message.
          'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
-         'is_automatic' => false,                   // Automatically activate plugins after installation or not.
+         'is_automatic' => true,                   // Automatically activate plugins after installation or not.
          'message'      => ''
       );
 
@@ -151,4 +144,26 @@ function muse_to_wordpress_xd_register_required_plugins()
 }
 
 add_action( 'tgmpa_register', 'muse_to_wordpress_xd_register_required_plugins' );
+
+function mtw_check_plugins_required( $mtw_page )
+{	
+	
+	$finder = new DomXPath($mtw_page->DOMDocument);
+	$name = "plugin_requier";
+	$results = $finder->query("//meta[@name='plugin_requier']");
+
+	$plugin_requier_options[$mtw_page->file_url] = array();
+
+	foreach ($results as $key => $el) 
+	{
+		$el_args = $el->getAttribute("args");
+		$plugin_requier_options[$mtw_page->file_url][] = json_decode( "[".$el_args."]", true )[0];
+	}
+
+	$MTW_plugins_requier = get_option( "MTW_plugins_requier", array() );
+	$MTW_plugins_requier = array_merge( $MTW_plugins_requier, $plugin_requier_options );
+	update_option( "MTW_plugins_requier", $MTW_plugins_requier );
+
+}
+add_action( 'DOMDocument_change', 'mtw_check_plugins_required' );
 ?>

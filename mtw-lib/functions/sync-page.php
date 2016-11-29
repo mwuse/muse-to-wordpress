@@ -4,6 +4,10 @@ function mtw_sync_muse_page()
 {
 	global $muse_projects;
 	global $mtw_option;
+	if( !$mtw_option )
+	{
+		$mtw_option = get_option( 'mtw_option' );
+	}
 
 	$preg_excludes = array(
 		"[$]",
@@ -26,11 +30,10 @@ function mtw_sync_muse_page()
 
 	$preg_excludes = apply_filters( "mtw_exclude_from_sync_page", $preg_excludes );
 
-	if( !is_admin() || !isset( $mtw_option['mtw_auto_page'] ) )
+	if( !is_admin() || ( is_admin() && !isset( $mtw_option['mtw_auto_page'] ) ) ) 
 	{
 		return;
 	}
-
 	/* 
 	create or update pages
 	*/
@@ -38,7 +41,6 @@ function mtw_sync_muse_page()
 	$update_pages = array();
 	$archives = array();
 	$update_links = false;
-
 
 	foreach ( array_keys( $muse_projects ) as $project_name ) 
 	{
@@ -114,9 +116,11 @@ function mtw_sync_muse_page()
 
 					if( $old_mt != $page['mt'] )
 					{
+						do_action( "DOMDocument_change", $mtw_page );
+
 						$wp_page['ID'] = $isset_page[0]['ID'];						
 						wp_update_post( $wp_page, $wp_error );
-
+						
 						//update link
 						update_post_meta( $isset_page[0]['ID'], 'muse_mt', $page['mt'] );
 						$update_links = true;
@@ -152,16 +156,18 @@ function mtw_sync_muse_page()
 	/* 
 	Declare archive
 	*/
+	$update_archives = false;
 	foreach ($archives as $key => $archive ) 
 	{
 		preg_match("#archive-(.*).html#", $archive['file'], $matches);
-		if ( $matches ) 
+		if ( $matches && !empty( $archives[$key]['title'] ) )  
 		{
-			$archives[$key]['post_type'] = $matches[1];
+			$archives[$key]['post_type'] = $matches[1]; 
+			$update_archives = true;
 		}
 	}
 
-	if( $archives )
+	if( $update_archives )
 	{
 		update_option( "mtw_archives_auto", $archives );
 	}
@@ -190,9 +196,7 @@ function mtw_sync_muse_page()
 	
 }
 
-function mtw_wp_loaded_admin()
-{
-	add_action( 'wp_loaded', 'mtw_sync_muse_page', 2 );
-}
-add_action( 'admin_init', 'mtw_wp_loaded_admin' );
+
+add_action( 'wp_loaded', 'mtw_sync_muse_page', 2);
+
 ?>
