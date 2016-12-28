@@ -81,6 +81,7 @@ add_filter( 'mtw_query_filter', 'category__in_by_slug', 10, 3 );
 function mtw_enqueue_front_style()
 {
  	wp_enqueue_style( "mtw-front-style", TTR_MW_PLUGIN_URL . 'front-style.css' );
+ 	wp_enqueue_script('jquery');
 }
 add_action( 'wp_enqueue_scripts' , 'mtw_enqueue_front_style' );
 

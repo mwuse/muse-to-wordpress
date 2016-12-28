@@ -80,7 +80,7 @@ class MusePage
 			$update = true;
 		}
 
-		/*$update = false;*/
+		//$update = true;
 
 		foreach ($as as $key => $a) {
 			
@@ -98,7 +98,8 @@ class MusePage
 					}
 					else
 					{
-						$logic_links[$href] = site_url();
+						$site_url = site_url();
+						$logic_links[$href] = $site_url;						
 					}
 				}
 			}

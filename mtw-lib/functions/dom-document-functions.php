@@ -1,4 +1,27 @@
 <?php
+
+function DOMinnerHTML(DOMNode $element) 
+{ 
+    $innerHTML = ""; 
+    $children  = $element->childNodes;
+
+    if( $children )
+    {
+
+	    foreach ($children as $child) 
+	    { 
+	        $innerHTML .= $element->ownerDocument->saveHTML($child);
+	    }
+
+	    return $innerHTML; 
+
+	}
+	else
+	{
+		return '';
+	}
+}
+
 function mtw_exclude_get($url)
 {
 	$url = preg_replace("#\?.*#", "", $url);
@@ -123,7 +146,8 @@ function repaire_link_script($html)
 		'iframe' => array('src'),
 		'object' => array('data'),
 		'meta' => array('content', 'data-src'),
-		'source' => array( 'src' )
+		'source' => array( 'src' ),
+		'div' => array( 'data-preloadimg' )
 		);
 
 	foreach ($link_script as $tag => $types) 
@@ -142,7 +166,9 @@ function repaire_link_script($html)
 				{
 					$newLink =  TTR_MW_TEMPLATES_URL . $folderName . "/" . $link->getAttribute($type);
 					$newLink = str_replace( $deviceType."/../", '', $newLink);
-					/*echo $newLink;
+
+					/*echo $tag . ": ";
+					echo $newLink;
 					echo "<hr>";*/
 					$link->setAttribute( $type , $newLink  );
 				}
@@ -155,8 +181,8 @@ function repaire_link_script($html)
 			}
 		}
 	}
-	//echo $folderName;
-	//exit();
+	/*echo $folderName;
+	exit();*/
 }
 
 function repaire_responsive($html)

@@ -87,9 +87,7 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 	{
 	echo $wp_head;
 	}
-
 	?>
-
 
 </head>
 <body <?php body_class(); ?> >
@@ -99,15 +97,15 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 	$mtw_body->loadHTML('<body></body>');
 	merge_child_nodes($mtw_body, "body", $html, "body", 0 );
 
-
-	//move muse footer
-	$sript_for_footer = $mtw_body->getElementsByTagName('script');
-	
 	$to_deletes = array();
 
 	$muse_footer = new DOMDocument();
 	$muse_footer->loadHTML('<body></body>');
 	$muse_footer_body = $muse_footer->getElementsByTagName('body')->item(0);
+
+	//move muse footer
+	$sript_for_footer = $mtw_body->getElementsByTagName('script');
+	
 
 	foreach ($sript_for_footer as $key => $script) {
 		$to_deletes[] = $script;
@@ -116,8 +114,9 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 	{
 		$nodeImported = $muse_footer->importNode($to_delete, true);
 		$muse_footer_body->appendChild($nodeImported);
-	}
 
+		$to_delete->parentNode->removeChild($to_delete);
+	}
 
 
 	do_action( "DOMDocument_body_load", $mtw_body );
@@ -126,12 +125,9 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
                                       "!</body></html>$!si"),
                                 "",
                                 restore_html_dom_bug( $mtw_body->saveHTML() ) );
-	?>
-	<script type="text/javascript">
-	var $ = jQuery;
-	</script>
-	<?php
-	if($do_shortcode){
+	
+	if( $do_shortcode )
+	{
 		$str_mtw_body = do_shortcode( $str_mtw_body );
 	}
 
@@ -155,14 +151,18 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 	{
 		wp_footer();
 	}
+
+	?>
+	<script type="text/javascript">
+	var $ = jQuery;
+	</script>
+	<?php
 	
-	
-	
-	/*echo preg_replace(array(
+	echo preg_replace(array(
 					"/^\<\!DOCTYPE.*?<body>/si",
                     "!</body></html>$!si"),
                 	"",
-                 $muse_footer->saveHTML() );*/
+                 $muse_footer->saveHTML() );
     
 	?>
 </body>

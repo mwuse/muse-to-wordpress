@@ -47,6 +47,21 @@ function mtw_logic_template_redirect($html, $fileurl)
 				$redirect = $value['page'];
 			}
 		}
+
+		if( $value['subject'] == 'function')
+		{
+			eval("\$function = ".$value['key']."();");
+			
+			if( $function )
+			{
+				$redirect = $value['page'];
+			}
+		}
+
+		if( $value['subject'] == '_get' && $_GET[$value['key']] == $value['value'])
+		{
+			$redirect = $value['page'];
+		}
 	}
 
 
@@ -57,15 +72,21 @@ function mtw_logic_template_redirect($html, $fileurl)
 		$redirect = $force_redirect;
 	}
 
-
+	global $deviceType;
 	
 	if( $redirect )
 	{	
-		/*echo '<pre>';
-		print_r( $redirect );
-		exit();*/
+		$file = TTR_MW_TEMPLATES_PATH . $folder . '/' . $redirect;
+		if( $deviceType != 'computer' )
+		{
+			$file_mobile = TTR_MW_TEMPLATES_PATH . $folder . '/' . $deviceType . '/' . $redirect;
+			if( file_exists( $file_mobile ) )
+			{
+				$file = $file_mobile;
+			}
+		}
 		$redirect_file = $redirect;
-		$html->loadHTMLFile( TTR_MW_TEMPLATES_PATH . $folder . '/' . $redirect );	
+		$html->loadHTMLFile( $file );	
 	}
 	
 	
