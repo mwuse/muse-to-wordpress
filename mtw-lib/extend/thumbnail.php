@@ -5,15 +5,32 @@ function mtw_thumbnail_replacer($dom){
 	$mtw_thumbs = dom_getElementsByClass( $dom , "mtw-thumb" );
 
 	if( $mtw_thumbs->length )
-	{
-		if( $thumb = get_post_thumbnail_id($post->ID) )
-		{	
+	{	
 			foreach ( $mtw_thumbs as $key => $mtw_thumb ) 
 			{
-				$mtw_thumb->parentNode->setAttribute('data-src_id', $thumb);
+				if( $mtw_thumb->getAttribute('data-custom') != ' ' && $custom_field = $mtw_thumb->getAttribute('data-custom') )
+				{
+					$custom_field = do_shortcode( trim( $custom_field ) );;
+					$custom_field_meta = get_post_meta( $post->ID, $custom_field, true );
+					$thumb = $custom_field_meta;					
+				}				
+
+				if( !$thumb )
+				{
+					$thumb = get_post_thumbnail_id($post->ID);
+				}
+
+				if( $thumb )
+				{
+					$mtw_thumb->parentNode->setAttribute('data-src_id', $thumb);
+					$thumb = false;
+				}
+				
+				
 			}
-		}
+
 	}
+
 }
 add_action( 'DOMDocument_loaded', 'mtw_thumbnail_replacer', 10, 1 );
 
