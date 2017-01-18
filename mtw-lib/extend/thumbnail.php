@@ -40,41 +40,43 @@ function mtw_replace_src_id()
 	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function($) {
-		$('[data-src_id]').each(function(index, el) {
+		setTimeout( function(){ 
+			$('[data-src_id]').each(function(index, el) {
 
-			jQuery.post(
-			    ajaxurl, 
-			    {
-			        'action': 'mtw_get_best_thumb_size',
-			        'data':   
-			        {
-			        	'src_id' : $(el).data('src_id'),
-			        	'width' : $(el).width(),
-			        	'height' : $(el).height()
-			        }
-			    }, 
-			    function(response){
-			        $(el).css('background-image', 'url(' + $.trim(response) + ')' );
-			        $(el).css('background-position', 'center center' );
-			        $(el).css('background-size', 'cover' );
-			        console.log( response );
-			    }
-			);
-		});
+				jQuery.post(
+				    ajaxurl, 
+				    {
+				        'action': 'mtw_get_best_thumb_size',
+				        'data':   
+				        {
+				        	'src_id' : $(el).data('src_id'),
+				        	'width' : $(el).width(),
+				        	'height' : $(el).height()
+				        }
+				    }, 
+				    function(response){
+				        $(el).css('background-image', 'url(' + $.trim(response) + ')' );
+				        $(el).css('background-position', 'center center' );
+				        $(el).css('background-size', 'cover' );
+				        console.log( response );
+				    }
+				);
+			});
 
-		$('.mtw-thumb').each(function(index, el) {
-			if( !$(el).parent().data('src_id') )
-			{
-				if( $(el).hasClass('empty_display_none') )
+			$('.mtw-thumb').each(function(index, el) {
+				if( !$(el).parent().data('src_id') )
 				{
-					$(el).parent().hide();
-					if( $(el).parent().parent().hasClass('browser_width') )
+					if( $(el).hasClass('empty_display_none') )
 					{
-						$(el).parent().parent().hide();
+						$(el).parent().hide();
+						if( $(el).parent().parent().hasClass('browser_width') )
+						{
+							$(el).parent().parent().hide();
+						}
 					}
 				}
-			}
-		});
+			});
+		}, 500);
 		
 	});
 	</script>
