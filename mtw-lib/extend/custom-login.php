@@ -7,7 +7,7 @@ function mtw_exclude_wp_login( $excludes )
 	return $excludes;
 }
 
-add_filter( "mtw_exclude_from_sync_page", "mtw_exclude_wp_login" );
+//add_filter( "mtw_exclude_from_sync_page", "mtw_exclude_wp_login" );
 
 function head_custom_login( $head )
 {
@@ -49,7 +49,7 @@ function head_custom_login( $head )
 	return ob_get_clean() . $head;
 }
 
-add_filter( 'head_html_filter', 'head_custom_login' );
+//add_filter( 'head_html_filter', 'head_custom_login' );
 
 function mtw_custom_login_callback($buffer) 
 {
@@ -120,5 +120,5 @@ function mtw_custom_login_init()
 
 }
 
-add_action( "init", "mtw_custom_login_init" );
+//add_action( "init", "mtw_custom_login_init" );
 ?>
