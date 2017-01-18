@@ -127,8 +127,8 @@ add_action( 'wp_enqueue_scripts', 'muse_to_wordpress_com_scripts' );
 
 
 function mtw_load_custom_admin_styles() {
-	wp_register_style( 'mtw_dashicons', get_template_directory_uri() . '/dashicon/style.css', false, '1.0.0' );
-	wp_enqueue_style( 'mtw_dashicons' );
+	//wp_register_style( 'mtw_dashicons', get_template_directory_uri() . '/dashicon/style.css', false, '1.0.0' );
+	//wp_enqueue_style( 'mtw_dashicons' );
 }
 add_action( 'admin_enqueue_scripts', 'mtw_load_custom_admin_styles' );
 
