@@ -5,8 +5,8 @@ Contributors URL: http://musetowordpress.com
 Tags: Customize
 
 Requires at least: 4.0
-Tested up to: 4.6.1
-Stable tag: 1.0.5
+Tested up to: 4.7.1
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,3 +38,4 @@ http://musetowordpress.com/installation/
 
 * Based on Underscores http://underscores.me/, (C) 2012-2016 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
 * normalize.css http://necolas.github.io/normalize.css/, (C) 2012-2016 Nicolas Gallagher and Jonathan Neal, [MIT](http://opensource.org/licenses/MIT)
+* Pagetemplater by WPExplorer: https://github.com/wpexplorer/page-templater/blob/master/pagetemplater.php
