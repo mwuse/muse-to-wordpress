@@ -65,7 +65,7 @@ function mtw_sync_muse_page()
 
 				$page['title'] = $mtw_page->DOMDocument->getElementsByTagName('title')->item(0)->nodeValue;
 
-
+				do_action( "DOMDocument_change", $mtw_page );
 				//check hierarchy
 				$exclude = false;
 				foreach ( $preg_excludes as $value ) 
@@ -116,7 +116,7 @@ function mtw_sync_muse_page()
 
 					if( $old_mt != $page['mt'] )
 					{
-						do_action( "DOMDocument_change", $mtw_page );
+						
 
 						$wp_page['ID'] = $isset_page[0]['ID'];						
 						wp_update_post( $wp_page, $wp_error );

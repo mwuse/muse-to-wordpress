@@ -166,4 +166,5 @@ function mtw_check_plugins_required( $mtw_page )
 
 }
 add_action( 'DOMDocument_change', 'mtw_check_plugins_required' );
+
 ?>
