@@ -36,10 +36,10 @@ function ttr_get_muse_projects(){
 
    $mtw_option =  get_option('mtw_option');
    
-   if( is_array( $mtw_option ) && isset( $mtw_option['mtw_default_project'] )
+   if( is_array( $mtw_option ) && isset( $mtw_option['mtw_default_project'] ) )
    {
       $default_key = $mtw_option['mtw_default_project'];
-      
+
       $default_project[$default_key] = $museProjects[$default_key];
       unset($museProjects[$default_key]);
 
