@@ -101,7 +101,13 @@ function ttr_template_filter( $template = null , $pass2 = false )
 				2 => 'taxonomy',
 				3 => 'taxonomy-' . $tax,
 				4 => 'taxonomy-' . $tax . '-' . $term
-				)
+				),
+			'is_tag' => array(
+				0 => 'index',
+				1 => 'archive',
+				2 => 'tag',
+				3 => 'tag-' . $term,
+				),
 			),
 		'is_404' => array(
 			0 => '404'

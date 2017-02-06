@@ -82,8 +82,6 @@ function ttr_get_muse_html_array($project = null){
    if( isset( $museProjects['XD'] ) && empty( get_option( 'mtw-xd-template-instruction-notice' ) ) )
    {
       add_action( 'admin_notices', 'mtw_xd_template_instruction' );
-
-      
    }
 
 	return $result;
