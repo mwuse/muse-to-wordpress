@@ -91,6 +91,7 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 	
 	?>
 	<script type="text/javascript">
+	jQuery.noConflict();
 	var $ = jQuery;
 	</script>
 	<?php
@@ -123,7 +124,7 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 		$nodeImported = $muse_footer->importNode($to_delete, true);
 		$muse_footer_body->appendChild($nodeImported);
 
-		$to_delete->parentNode->removeChild($to_delete);
+		//$to_delete->parentNode->removeChild($to_delete);
 	}
 
 
@@ -162,15 +163,16 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 
 	?>
 	<script type="text/javascript">
+	jQuery.noConflict();
 	var $ = jQuery;
 	</script>
 	<?php
 	
-	echo preg_replace(array(
+	/*echo preg_replace(array(
 					"/^\<\!DOCTYPE.*?<body>/si",
                     "!</body></html>$!si"),
                 	"",
-                 $muse_footer->saveHTML() );
+                 $muse_footer->saveHTML() );*/
     
 	?>
 </body>

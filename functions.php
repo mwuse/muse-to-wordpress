@@ -80,6 +80,15 @@ endif;
 add_action( 'after_setup_theme', 'muse_to_wordpress_com_setup' );
 
 /**
+ * Define charset by language settings
+ */
+function mtw_init_charset()
+{
+	echo '<meta http-equiv="content-type" content="text/html; charset=' . get_bloginfo( 'charset' ) . '">';	
+}
+
+add_action( 'wp_head', 'mtw_init_charset' );
+/**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
  * Priority 0 to make it available to lower priority callbacks.

@@ -5,8 +5,8 @@ Contributors URL: http://musetowordpress.com
 Tags: Customize
 
 Requires at least: 4.0
-Tested up to: 4.7.1
-Stable tag: 1.0.62
+Tested up to: 4.7.2
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,8 +25,8 @@ This is not really a WordPress theme, you need Adobe Muse software to customize 
 5. Create a new folder for your project in mtw-themes (ex: mtw-themes/my-project)
 4. In Adobe Muse : exporte as HTML in your new folder
 
-see more on
-http://musetowordpress.com/installation/
+== Read more & learn ==
+http://musetowordpress.com/
 
 
 == Changelog ==
@@ -36,6 +36,6 @@ http://musetowordpress.com/installation/
 
 == Credits ==
 
-* Based on Underscores http://underscores.me/, (C) 2012-2016 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
+* Underscores http://underscores.me/, (C) 2012-2016 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
 * normalize.css http://necolas.github.io/normalize.css/, (C) 2012-2016 Nicolas Gallagher and Jonathan Neal, [MIT](http://opensource.org/licenses/MIT)
 * Pagetemplater by WPExplorer: https://github.com/wpexplorer/page-templater
