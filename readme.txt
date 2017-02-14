@@ -29,11 +29,6 @@ This is not really a WordPress theme, you need Adobe Muse software to customize 
 http://musetowordpress.com/
 
 
-== Changelog ==
-
-= 1.0 - Nov 2016 = * Initial release
-
-
 == Credits ==
 
 * Underscores http://underscores.me/, (C) 2012-2016 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
