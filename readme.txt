@@ -13,8 +13,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Make your own WordPress theme with Adobe Muse without coding.
-This is not really a WordPress theme, you need Adobe Muse software to customize you theme.
+Design your WordPress theme easily in Adobe Muse
+Get the best of the both.
+
+For Wordpress users who know how to use a WP theme:
+This is not a WordPress theme, you need Adobe Muse software to customize you theme.
 
 == Installation ==
 	
