@@ -6,9 +6,7 @@ function remove_muse_preview_elements($dom, $parent)
 	foreach ($muse_previews as $key => $muse_preview) {
 		$muse_preview->parentNode->removeChild($muse_preview);
 	}
-	
-
 }
-add_action( 'DOMDocument_loaded', 'remove_muse_preview_elements', 1, 2 );
+add_action( 'DOMDocument_loaded', 'remove_muse_preview_elements', 15, 2 );
 
 ?>

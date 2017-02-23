@@ -82,7 +82,7 @@ class MtwSettingsPage
 
         add_settings_field(
             'mtw_auto_page', // ID
-            __('Synchronize Muse and Wordpress Pages', 'muse-to-wordpress'), // Title 
+            __('Synchronize Muse and Wordpress Pages automatically', 'muse-to-wordpress'), // Title 
             array( $this, 'get_bool_field' ), // Callback
             'muse-to-wordpress-setting', // Page
             'mtw_first_setting_section', // Section 
