@@ -144,10 +144,13 @@ function mtw_import_item( $target_dom, $target_container, $item_path )
 		foreach ($mtw_item_links as $key => $value) {
 			if( $value->tagName == "link" )
 			{
-				$cssContent.= $wp_filesystem->get_contents( mtw_exclude_get( str_replace( TTR_MW_TEMPLATES_URL, TTR_MW_TEMPLATES_PATH, $value->getAttribute('href') ) ) );
+				$link_url = mtw_exclude_get( str_replace( TTR_MW_TEMPLATES_URL, TTR_MW_TEMPLATES_PATH, $value->getAttribute('href') ) );
+				if( preg_match("#.css$#", $link_url) )
+				{
+					$cssContent.= $wp_filesystem->get_contents( $link_url );
+				}
 			}
 		}
-		
 		// join unique css
 		$parent_CSS_class = $container_class;
 
