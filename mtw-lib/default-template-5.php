@@ -5,6 +5,8 @@ global $wp_head;
 global $body_loaded;
 global $muse_footer;
 global $mtw_page;
+global $load_header_mtw;
+global $load_footer_mtw;
 
 /*$load_header = false;
 $load_footer = false;*/
@@ -63,7 +65,10 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
                                 "",
                                 restore_html_dom_bug( $mtw_head->saveHTML() ) );
 	
-	echo apply_filters( 'head_html_filter', $str_mtw_head);
+	if( $load_header_mtw )
+	{
+		echo apply_filters( 'head_html_filter', $str_mtw_head);
+	}
 	
 	
 	//get wp_head in a var
@@ -83,18 +88,10 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
                                       "!</head></html>$!si"),
                                 "",
                                 restore_html_dom_bug( $head->saveHTML() ) );
-
 	if( $load_header )
 	{
 	echo $wp_head;
 	}
-	
-	?>
-	<script type="text/javascript">
-	var $ = jQuery;
-	</script>
-	<?php
-
 	?>
 
 </head>
@@ -166,11 +163,14 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 	</script>
 	<?php
 	
-	echo preg_replace(array(
-					"/^\<\!DOCTYPE.*?<body>/si",
-                    "!</body></html>$!si"),
-                	"",
-                 $muse_footer->saveHTML() );
+	if( $load_footer_mtw )
+	{
+		echo preg_replace(array(
+						"/^\<\!DOCTYPE.*?<body>/si",
+	                    "!</body></html>$!si"),
+	                	"",
+	                 $muse_footer->saveHTML() );
+	}
     
 	?>
 </body>

@@ -19,6 +19,8 @@ global $deviceType;
 global $mtwQuery;
 global $load_header;
 global $load_footer;
+global $load_header_mtw;
+global $load_footer_mtw;
 global $do_shortcode;
 global $mtw_page;
 
@@ -63,6 +65,8 @@ $detect = new Mobile_Detect;
 $do_shortcode = true;
 $load_header = true;
 $load_footer = true;
+$load_header_mtw = true;
+$load_footer_mtw = true;
 
 
 /* Actions */
@@ -221,9 +225,4 @@ included in a init action of Wordpress
 }
 
 add_action('init' , 'create_mtw_custom_code_dir' );
-
-
-
-
-
 ?>

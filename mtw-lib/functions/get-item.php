@@ -138,7 +138,6 @@ function mtw_import_item( $target_dom, $target_container, $item_path )
 
 		$mtw_item_links = array_values( $mtw_item_links );
 
-
 		
 		$cssContent = "";
 		foreach ($mtw_item_links as $key => $value) {
