@@ -34,7 +34,7 @@ function ttr_get_muse_projects(){
    $mtw_theme_dir_no_end_slash = substr(TTR_MW_TEMPLATES_PATH, 0, -1) ;
    $museProjects = ttr_dirToArray($mtw_theme_dir_no_end_slash);
 
-   $mtw_option =  get_option('mtw_option');
+   $mtw_option =  get_option('mtw_option', array() );
    
    if( is_array( $mtw_option ) && isset( $mtw_option['mtw_default_project'] ) )
    {
