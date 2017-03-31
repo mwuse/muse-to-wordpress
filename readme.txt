@@ -6,7 +6,7 @@ Tags: Customize
 
 Requires at least: 4.0
 Tested up to: 4.7.2
-Stable tag: 1.0.82
+Stable tag: 1.0.83
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
