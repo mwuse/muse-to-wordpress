@@ -221,8 +221,6 @@ included in a init action of Wordpress
 		$js_src = str_replace(ABSPATH, site_url().'/', $file);
 		wp_enqueue_script( basename($file), $js_src, array('jquery'), $ver, true );
 	} 
-	
 }
-
 add_action('init' , 'create_mtw_custom_code_dir' );
 ?>

@@ -37,7 +37,6 @@ class MusePage
 		$this->DOMDocument = $this->get_DOMDocument();
 
 
-
 		if( $complet )
 		{
 			

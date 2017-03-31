@@ -66,7 +66,7 @@ function ttr_template_filter( $template = null , $pass2 = false )
 	}
 
 	
-	$template_hierarchy = array(
+	$template_hierarchy = apply_filters( 'mtw_template_hierarchy', array(
 		'is_home' => array(
 			0 => 'index'
 			),
@@ -121,7 +121,7 @@ function ttr_template_filter( $template = null , $pass2 = false )
 			2 => 'item-' . $post_type,
 			3 => 'item-' . $tax
 			)
-		);
+		) );
 	
 	$isMuseTheme = strpos( $template , TTR_MW_TEMPLATES_PATH );
 

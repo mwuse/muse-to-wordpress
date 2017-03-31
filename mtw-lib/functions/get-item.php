@@ -21,7 +21,6 @@ function mtw_import_item( $target_dom, $target_container, $item_path )
 	repaire_link_script($itemDom);
 
 
-
 	$container_class = str_replace( ".", "-", $page->base_name );
 	$temp_ct_class = $target_container->getAttribute("class");
 	$target_container->setAttribute( 'class', $temp_ct_class . " " . $container_class );
@@ -77,9 +76,12 @@ function mtw_import_item( $target_dom, $target_container, $item_path )
 	$target_container->appendChild( $nodeImported );
 
 
-
-
 	// exclude script link if in primary dom
+	global $redirect_file;
+	if( $redirect_file )
+	{
+		$container_class = urlencode( $redirect_file );
+	}
 
 	if( !in_array($container_class, $mtw_items_called) )
 	{
@@ -167,13 +169,11 @@ function mtw_import_item( $target_dom, $target_container, $item_path )
 			''
 			);
 
-		
-
 		$cssContent = preg_replace( $pattern, $replacement, $cssContent );
 		
 
 		$cssDOM = new DOMDocument();
-		$cssDOM->loadHTML( '<div class="item-style" ><style type="text/css">' . $cssContent . '</style></div>' );
+		$cssDOM->loadHTML( '<div class="item-style" ><style type="text/css">/* item css */' . $cssContent . '</style></div>' );
 
 
 		$styleDom = $cssDOM->getElementsByTagName('div')->item(0);
@@ -181,7 +181,6 @@ function mtw_import_item( $target_dom, $target_container, $item_path )
 
 
 		$target_style = $target_dom->getElementsByTagName("body")->item(0)->childNodes->item(0);
-
 
 		$target_style->parentNode->insertBefore($cssImported, $target_style);
 		

@@ -86,7 +86,11 @@ function mtw_logic_template_redirect($html, $fileurl)
 			}
 		}
 		$redirect_file = $redirect;
-		$html->loadHTMLFile( $file );	
+		$html->loadHTMLFile( $file );
+	}
+	else
+	{
+		$redirect_file = false;
 	}
 	
 	
