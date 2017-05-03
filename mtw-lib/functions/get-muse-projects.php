@@ -30,9 +30,15 @@ function ttr_dirToArray($dir) {
    }
 }
 
-function ttr_get_muse_projects(){	
-   $mtw_theme_dir_no_end_slash = substr(TTR_MW_TEMPLATES_PATH, 0, -1) ;
-   $museProjects = ttr_dirToArray($mtw_theme_dir_no_end_slash);
+global $museProjects;
+
+function ttr_get_muse_projects(){   
+   global $museProjects;
+   if( !$museProjects )
+   {
+      $mtw_theme_dir_no_end_slash = substr(TTR_MW_TEMPLATES_PATH, 0, -1) ;
+      $museProjects = ttr_dirToArray($mtw_theme_dir_no_end_slash);
+   }
 
    $mtw_option =  get_option('mtw_option', array() );
    
@@ -55,7 +61,11 @@ function ttr_get_muse_projects(){
 function ttr_get_muse_html_array($project = null){
 
 	$result = array();
-	$museProjects = ttr_get_muse_projects();
+   global $museProjects;
+   if( !$museProjects )
+   {
+	  $museProjects = ttr_get_muse_projects();
+   }
 
    if( $museProjects )
    {
@@ -79,11 +89,13 @@ function ttr_get_muse_html_array($project = null){
       add_action( 'admin_notices', 'no_mtw_template' );
    }
 
-   if( isset( $museProjects['XD'] ) && empty( get_option( 'mtw-xd-template-instruction-notice' ) ) )
+   if ( !empty($museProjects) ) 
    {
-      add_action( 'admin_notices', 'mtw_xd_template_instruction' );
+      if( isset( $museProjects['XD'] ) && !get_option( 'mtw-xd-template-instruction-notice' ) )
+      {
+         add_action( 'admin_notices', 'mtw_xd_template_instruction' );
+      }
    }
-
 	return $result;
 
 }

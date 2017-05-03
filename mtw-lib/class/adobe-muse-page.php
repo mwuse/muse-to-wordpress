@@ -44,13 +44,14 @@ class MusePage
 
 			do_action( 'DOMDocument_loaded', $this->DOMDocument, $this->file_url );
 
-			//add_filter( $tag, $function_to_add, $priority, $accepted_args );
 
-			$this->muse_title = $this->DOMDocument->getElementsByTagName('title')->item(0)->nodeValue;
-			
-			$title = $this->DOMDocument->getElementsByTagName('title')->item(0);
-			$title->parentNode->removeChild($title);
-
+			$tag_title = $this->DOMDocument->getElementsByTagName('title');
+			if( $this->DOMDocument->getElementsByTagName('title')->length > 0 )
+			{
+				$this->muse_title = $this->DOMDocument->getElementsByTagName('title')->item(0)->nodeValue;
+				$title = $this->DOMDocument->getElementsByTagName('title')->item(0);
+				$title->parentNode->removeChild($title);
+			}
 
 			//$this->wp_pages = ttr_get_page_by_template($this->template_slug);
 

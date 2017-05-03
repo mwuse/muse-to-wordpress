@@ -191,9 +191,14 @@ function mtw_sync_muse_page()
 
 	if( $update_links == true && !isset( $_GET['update_all_logic_links'] ) )
 	{
-		wp_redirect( admin_url() . "themes.php?page=muse-to-wordpress-setting&update_all_logic_links=1" );
+		wp_redirect( admin_url() . "admin.php?page=muse-to-wordpress-setting&update_all_logic_links=1" );
+		exit();
 	}
-	
+	elseif( isset( $_GET['update_all_logic_links'] ) && $_SERVER['HTTP_REFERER'] )
+	{
+		wp_redirect( $_SERVER['HTTP_REFERER'] );
+		exit();
+	}
 }
 
 

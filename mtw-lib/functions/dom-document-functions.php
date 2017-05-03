@@ -1,4 +1,61 @@
 <?php
+function dom_remove_elements_by_selectors($dom, $exclude)
+{
+	$exclude = trim( preg_replace("#\s|(&nbsp;)#", "", $exclude) );
+	$excludes = explode(",", $exclude);
+	foreach ($excludes as $key => $exclude) 
+	{
+		if( strpos($exclude, '.') === 0 )
+		{
+			//class
+			$elements = dom_getElementsByClass($dom, substr($exclude, 1) );
+			foreach ($elements as $key => $element) 
+			{
+				$element->parentNode->removeChild( $element );
+			}
+		}	
+		elseif( strpos($exclude, '#') === 0 )
+		{
+			//id
+			$element = $dom->getElementById( substr($exclude, 1) );
+			$element->parentNode->removeChild( $element );
+		}
+		else
+		{
+			$elements = $dom->getElementsByTagName( $exclude );
+			foreach ($elements as $key => $element) 
+			{
+				$element->parentNode->removeChild( $element );
+			}
+		}	
+	}
+}
+
+
+function dom_get_elements_by_selectors($dom, $get, $index = 0)
+{
+	$get = trim( preg_replace("#\s|(&nbsp;)#", "", $get) );
+	$gets = explode(",", $get);
+	foreach ($gets as $key => $get) 
+	{
+		if( strpos($get, '.') === 0 )
+		{
+			//class
+			$element = dom_getElementsByClass( $dom, substr($get, 1) )->item( $index );
+		}	
+		elseif( strpos($get, '#') === 0 )
+		{
+			//id
+			$element = $dom->getElementById( substr($get, 1) );
+		}
+		else
+		{
+			$element = $dom->getElementsByTagName( $get )->item( $index );
+		}
+	}
+	return $element;
+}
+
 
 function DOMinnerHTML(DOMNode $element) 
 { 
@@ -88,7 +145,7 @@ function exclude_html_dom_bug($content)
 	$content = str_replace("<!--[if lt IE 8]>", "<!--[if lt IE 8]-->", $content);
 	$content = str_replace("<![endif]-->", "<!--[endif]-->", $content);
 
-	global $script64;
+	/*global $script64;
 
 	$starts = strpos_r($content, "<script");
 	$ends = strpos_r($content, "</script>");
@@ -109,7 +166,7 @@ function exclude_html_dom_bug($content)
 		$content = str_replace($value, '<script64>' .  count($script64) . '</script64>', $content);
 
 		$script64[] = $value;
-	}
+	}*/
 
 
 	return $content;
@@ -122,12 +179,12 @@ function restore_html_dom_bug($content)
 	$content = str_replace("<!--[endif]-->", "<![endif]-->", $content);
 
 	
-	global $script64;
+	/*global $script64;
 
 	foreach ( $script64 as $key => $value ) 
 	{
 		$content = str_replace('<script64>' .  $key . '</script64>', $value, $content);
-	}
+	}*/
 	
 	return $content;
 }
@@ -166,23 +223,17 @@ function repaire_link_script($html)
 				{
 					$newLink =  TTR_MW_TEMPLATES_URL . $folderName . "/" . $link->getAttribute($type);
 					$newLink = str_replace( $deviceType."/../", '', $newLink);
-
-					/*echo $tag . ": ";
-					echo $newLink;
-					echo "<hr>";*/
 					$link->setAttribute( $type , $newLink  );
 				}
 
 				
-				if( strpos( $link->getAttribute( $type ), 'http://192.168.1.30/mtw-script' ) === 0  && $_SERVER["SERVER_NAME"] != "192.168.1.30" ){
-					$newLink = str_replace( 'http://192.168.1.30/mtw-script' , 'http://muse-to-wordpress.net/mtw-script' , $link->getAttribute( $type ) );
+				if( strpos( $link->getAttribute( $type ), 'http://muse-to-wordpress.net/mtw-script' ) === 0 ){
+					$newLink = str_replace( 'http://muse-to-wordpress.net/mtw-script' , 'https://muse-to-wordpress.net/mtw-script' , $link->getAttribute( $type ) );
 					$link->setAttribute( $type, $newLink);
 				}
 			}
 		}
 	}
-	/*echo $folderName;
-	exit();*/
 }
 
 function repaire_responsive($html)
@@ -451,30 +502,6 @@ function mtw_inner_url_replace($html)
 			}
 		}
 	}
-}
-
-function exclude_template_link_and_script($html)
-{
-	/*$link_script = array(
-		'link' => 'href',
-		'script' => 'src',
-		);
-	$remove_items = array();
-	foreach ($link_script as $tag => $type) 
-	{
-		$links = $html->getElementsByTagName( $tag );
-		foreach ($links as $link) 
-		{
-			if( $link->getAttribute( $type ) && strpos( $link->getAttribute( $type ) , get_template_directory_uri() ) !== false )
-			{
-				$remove_items[] =  $link;
-			}
-
-		}	
-	}
-	foreach ($remove_items as $item) {
-		$item->parentNode->removeChild($item); 
-	}*/
 }
 
 function merge_child_nodes($receiver, $tagReceiver, $from, $tagFrom, $index )

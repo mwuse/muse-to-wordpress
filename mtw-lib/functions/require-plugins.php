@@ -20,7 +20,7 @@ function mtw_load_xd_template()
 	{
 		if( $_GET['mtw-unzip-template'] == "XD.zip" )
 		{
-			$copy_link = "http://muse-to-wordpress.net/template_html/XD.zip";
+			$copy_link = "https://muse-to-wordpress.net/template_html/XD.zip";
 			$content = $wp_filesystem->get_contents( $copy_link );
 			$wp_filesystem->put_contents( TTR_MW_PLUGIN_DIR . 'zip-template/XD.zip', $content);
 		}
@@ -85,7 +85,6 @@ add_action( "admin_footer", "mtw_notice_dismiss" );
 
 
 
-
 function mtw_notice_dismiss_by_id()
 {
 	$id = $_POST['data'];
@@ -110,7 +109,7 @@ function muse_to_wordpress_xd_register_required_plugins()
 	global $wp_filesystem;
 	WP_Filesystem();
 
-	$mtw_require = $wp_filesystem->get_contents("http://muse-to-wordpress.net/plugins/require.php");
+	$mtw_require = $wp_filesystem->get_contents("https://muse-to-wordpress.net/plugins/require.php");
 	if( $mtw_require )
 	{
 		$mtw_require_array = json_decode( $mtw_require, true );
@@ -121,25 +120,30 @@ function muse_to_wordpress_xd_register_required_plugins()
 
 	foreach ($MTW_plugins_requier as $key => $MTW_plugin_requier) 
 	{
-		if( !empty($MTW_plugin_requier) )
+		
+		if( !empty($MTW_plugin_requier) && file_exists( TTR_MW_TEMPLATES_PATH . $key ) )
 		{
+			/*echo "<pre>";
+			print_r( $key );*/
 			$plugins = array_merge( $plugins, $MTW_plugin_requier);
 		}
 	}
 
 
-      $config = array(
-         'id'           => 'muse-to-wordpress',     // Unique ID for hashing notices for multiple instances of TGMPA.
-         'default_path' => '',                      // Default absolute path to bundled plugins.
-         'menu'         => 'mtw-install-plugins', // Menu slug.
-         'has_notices'  => true,                    // Show admin notices or not.
-         'dismissable'  => false,                    // If false, a user cannot dismiss the nag message.
-         'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
-         'is_automatic' => true,                   // Automatically activate plugins after installation or not.
-         'message'      => ''
-      );
+	//exit();
 
-      tgmpa( $plugins, $config );
+	$config = array(
+	 'id'           => 'muse-to-wordpress',     // Unique ID for hashing notices for multiple instances of TGMPA.
+	 'default_path' => '',                      // Default absolute path to bundled plugins.
+	 'menu'         => 'mtw-install-plugins', // Menu slug.
+	 'has_notices'  => true,                    // Show admin notices or not.
+	 'dismissable'  => false,                    // If false, a user cannot dismiss the nag message.
+	 'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
+	 'is_automatic' => true,                   // Automatically activate plugins after installation or not.
+	 'message'      => ''
+	);
+
+	tgmpa( $plugins, $config );
    }
 }
 

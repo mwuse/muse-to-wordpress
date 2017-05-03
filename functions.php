@@ -135,11 +135,7 @@ function muse_to_wordpress_com_scripts() {
 add_action( 'wp_enqueue_scripts', 'muse_to_wordpress_com_scripts' );
 
 
-function mtw_load_custom_admin_styles() {
-	//wp_register_style( 'mtw_dashicons', get_template_directory_uri() . '/dashicon/style.css', false, '1.0.0' );
-	//wp_enqueue_style( 'mtw_dashicons' );
-}
-add_action( 'admin_enqueue_scripts', 'mtw_load_custom_admin_styles' );
+
 
 
 require_once(ABSPATH . 'wp-admin/includes/file.php');
@@ -162,11 +158,6 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Jetpack compatibility file.
  */
 require get_template_directory() . '/inc/jetpack.php';
-
-/**
- * Load TGM activation.
- */
-require get_template_directory() . '/inc/TGM-Plugin-Activation-2.6.1/class-tgm-plugin-activation.php';
 
 /**
  * Load Muse to Wordpress Tools.
@@ -195,3 +186,9 @@ function mtw_correct_adminbar_pos()
 }
 
 add_action( "wp_head" , "mtw_correct_adminbar_pos", 100 );
+
+require dirname(__FILE__) . '/inc/plugin-update-checker-master/plugin-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+		'https://muse-to-wordpress.net/theme-updater/last-version.json',
+		__FILE__
+	);

@@ -44,3 +44,15 @@
 .wp-content del{
 	text-decoration: line-through !important;
 }
+
+.wp-content img
+{
+	max-width: 100%;
+	height: auto;
+}
+
+.wp-content h2
+{
+    font-size: 150%;
+    line-height: 250%;
+}

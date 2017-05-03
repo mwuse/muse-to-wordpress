@@ -9,6 +9,7 @@ define("TTR_MW_PLUGIN_URL", get_template_directory_uri() . '/mtw-lib/' );
 define("TTR_MW_TEMPLATES_PATH", ABSPATH . 'mtw-themes/' );
 define("TTR_MW_TEMPLATES_URL", site_url() . '/mtw-themes/' );
 
+define('FS_METHOD', 'direct');
 
 global $museUrl;
 global $html;
@@ -24,8 +25,11 @@ global $load_footer_mtw;
 global $do_shortcode;
 global $mtw_page;
 
-require_once TTR_MW_PLUGIN_DIR . "Mobile-Detect-2.8.15/Mobile_Detect.php";
+require_once ABSPATH . 'wp-admin/includes/file.php';
 
+require_once TTR_MW_PLUGIN_DIR . "inc/Mobile-Detect-2.8.15/Mobile_Detect.php";
+
+require_once TTR_MW_PLUGIN_DIR . 'inc/TGM-Plugin-Activation-2.6.1/class-tgm-plugin-activation.php';
 
 
 $detect = new Mobile_Detect;
@@ -73,8 +77,6 @@ $load_footer_mtw = true;
 add_action( 'admin_enqueue_scripts', 'TTR_MW_load_admin_head' );
 add_action( 'admin_menu', 'register_ttr_page_linker' );
 
-//add_action( 'admin_menu', 'register_option_pll' );
-//add_action( 'admin_menu', 'register_template_page_translation' );
 
 /* Filters */
 add_filter( 'template_include', 'ttr_template_filter', 99 );
@@ -84,8 +86,14 @@ add_filter( 'mtw_query_filter', 'category__in_by_slug', 10, 3 );
 
 function mtw_enqueue_front_style()
 {
- 	wp_enqueue_style( "mtw-front-style", TTR_MW_PLUGIN_URL . 'front-style.css' );
- 	wp_enqueue_script('jquery');
+	global $museUrl;
+
+	if ( $museUrl ) 
+	{
+		wp_enqueue_style( "mtw-front-style", TTR_MW_PLUGIN_URL . 'front-style.css' );
+		wp_enqueue_script('jquery');
+	}
+	
 }
 add_action( 'wp_enqueue_scripts' , 'mtw_enqueue_front_style' );
 
@@ -101,7 +109,6 @@ function mtw_post_list_thumbnail($item, $post)
 	}
 	$value = str_replace($matches[1][0], $thumb[0], $value);
 	$item->childNodes->item(1)->nodeValue = $value;
-	//$item->childNodes->item(2)->nodeValue = "";
 }
 add_filter('mtw_post_list_thumbnail', 'mtw_post_list_thumbnail',10,3);
 
@@ -113,9 +120,6 @@ function mtw_post_list_nav($item, $post)
 	global $html;
 	$pageQuery = new WP_Query($mtwQuery);
 
-	/*echo '<pre>';
-	print_r($pageQuery->max_num_pages);
-	exit();*/
 
 	$mtwQuery['paged'] = max( 1, get_query_var('paged') );
 
@@ -161,7 +165,7 @@ function create_mtw_custom_code_dir()
 	if ( !file_exists($mtw_theme_path) ) 
 	{
 	
-	$wp_filesystem->mkdir( $mtw_theme_path , 0777, true);
+	$wp_filesystem->mkdir( $mtw_theme_path , 0755, true);
 
 	$txt = "This forlder is for your html muse export \n
 Create a folder by project \n
@@ -178,7 +182,7 @@ Create a folder by project \n
 	if ( !file_exists($mtw_content_path) ) 
 	{
 	
-	$wp_filesystem->mkdir( $mtw_content_path , 0777, true);
+	$wp_filesystem->mkdir( $mtw_content_path , 0755, true);
 	
 	//$readmeCodes = fopen($mtw_content_path."/readme.txt", "w") or die("Unable to open file!");
 	$txt = "This forlder is for your custom code .css .php .js \n
@@ -223,4 +227,35 @@ included in a init action of Wordpress
 	} 
 }
 add_action('init' , 'create_mtw_custom_code_dir' );
+
+
+function mtw_load_custom_admin_styles() {
+	wp_register_style( 'mtw_dashicons', TTR_MW_PLUGIN_URL . 'dashicon/style.css', false, '1.0.0' );
+	wp_enqueue_style( 'mtw_dashicons' );
+}
+add_action( 'admin_enqueue_scripts', 'mtw_load_custom_admin_styles' );
+
+function exclude_template_link_and_script($html)
+{
+	/*$link_script = array(
+		'link' => 'href',
+		'script' => 'src',
+		);
+	$remove_items = array();
+	foreach ($link_script as $tag => $type) 
+	{
+		$links = $html->getElementsByTagName( $tag );
+		foreach ($links as $link) 
+		{
+			if( $link->getAttribute( $type ) && strpos( $link->getAttribute( $type ) , get_template_directory_uri() ) !== false )
+			{
+				$remove_items[] =  $link;
+			}
+
+		}	
+	}
+	foreach ($remove_items as $item) {
+		$item->parentNode->removeChild($item); 
+	}*/
+}
 ?>

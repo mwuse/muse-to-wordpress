@@ -7,45 +7,92 @@ function register_ttr_page_linker(){
  	wp_enqueue_script( 'jquery-form' );
 	 	
 	wp_enqueue_style( 'ui-tabs', '//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css' );
-
-	//add_menu_page( 'Muse', 'Muse', 'manage_options', 'muse-page', 'ttr_page_linker', '' ); 
-
-	//add_submenu_page( "muse-to-wordpress-setting", "Projects", "Projects", 'manage_options', 'mtw-projects', 'ttr_page_linker' );
 }
+
+function mtw_delete_project()
+{
+	function ttr_link_delete_path($path)
+    {
+        if (is_dir($path) === true)
+        {
+            $files = array_diff(scandir($path), array('.', '..'));
+
+            foreach ($files as $file)
+            {
+                ttr_link_delete_path(realpath($path) . '/' . $file);
+            }
+
+            return rmdir($path);
+        }
+
+        else if (is_file($path) === true)
+        {
+            return unlink($path);
+        }
+
+        return false;
+    }
+	if( current_user_can( 'administrator' ) && $_POST['project_url'] )
+	{
+		ttr_link_delete_path( $_POST['project_url'] );
+		die( $_POST['project_url'] );
+	}
+	else
+	{
+		die( 'mtw_delete_project_error' );
+	}
+}
+
+add_action( 'wp_ajax_mtw_delete_project' , 'mtw_delete_project' );
 
 function ttr_page_linker(){
 	
 	global $html;
 
-	if($_POST){
-
-	}
-
-	echo '<h2>Muse to wordpress</h2>';
+	echo '<h2>Your Projects</h2>';
 
 	?>
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-	<script src="http://malsup.github.com/jquery.form.js"></script> 
+	<script type="text/javascript">
 
- 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
- 
-	<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script> 
+	jQuery(document).ready(function($) {
+		$('.delete-project').on('click', function(event) {
+			event.preventDefault();
+			if ( confirm("<?php echo __('Are you sure to delete this project', 'muse-to-wordpress') ?>") == true ) 
+			{
+			    jQuery.post(
+			        ajaxurl, 
+			        {
+			            'action': 'mtw_delete_project',
+			            'project_url':   $(this).data('dir')
+			        }, 
+			        function(response){
+			            location.reload();
+			        }
+			    );
+			} 
+		});
+	});
+	
 
+	</script>
+
+	<style type="text/css">
+	#ttr-muse-to-wordpress-tabs .ui-state-default 
+	{
+		padding-right: 30px;
+	}
+
+	.bt-delete-project
+	{
+		padding: 7px;
+		background: none !important;
+	}
+
+	</style>
 
 	
 	<div>
-	<!--<form id="uploadForm"action="<?php echo TTR_MW_PLUGIN_URL;  ?>ttr_checkForFile.php" method="post" enctype="multipart/form-data">
-    <b>Select a new archive to upload:</b><br>
-    <input type="file" name="file" id="file" >
-    <input type="submit" value="Upload your zip file" name="submit" class="button button-primary">
-	</form>
-	<p id="output"></p>
-	<p><i>Only zip files allowed!<br/> You can upload multiple muse projects but you need to put each one of them in a folder.<br>
-		If you have only one muse project you can either put it in a folder or leave it at the root of the zip file.</i></p>
-	</div>-->
-
-	<a href="?page=muse-to-wordpress-setting&update_all_logic_links=1" class="button">Update all links</a><br/><br/>
 
 	<script>
 		
@@ -98,16 +145,19 @@ function ttr_page_linker(){
 	<div id="ttr-muse-to-wordpress-tabs">
 	  	<ul>
 	  		<?php foreach ($ttrProjects as $projectKey => $project) { ?>
-	  		<li data-count="<?php echo $countTab; ?>"><a href="#<?php echo $projectKey; ?>"><?php echo $projectKey; ?></a></li>
+	  		<li data-count="<?php echo $countTab; ?>"><a href="#<?php echo $projectKey; ?>"><?php echo $projectKey; ?><span class="screen-reader-text">Dismiss this notice.</span></a></li>
 	  		<?php $countTab++; ?>
 	  		<?php } ?>
 	  	</ul>
+
+
 
 	<?php
 	//project tabs
 	foreach ($ttrProjects as $projectKey => $project) {
 		?>
 		<div id="<?php echo $projectKey; ?>">
+			<a href="#" class="delete-project" data-dir="<?php echo TTR_MW_TEMPLATES_PATH . $projectKey ?>" >Delete this project</a><br/><br/>
 			<?php
 
 			$links = array();
@@ -126,86 +176,6 @@ function ttr_page_linker(){
 	?>
 	</div><!-- end tabs -->
 
-	<script>
-	var response;
-	var toUpload;
-	var myData = new FormData();
-		$(document).ready(function() {
-			var options = {
-				target : 			null,
-				beforeSubmit :  	checkIfFileExist,
-				success : 			fileUploaded,
-			};
-			$('#uploadForm').ajaxForm(options);
-		});
-
-
-		function checkIfFileExist(formData,jqForm,options){
-
-			var querryString = $.param(formData);
-			var file = formData[0].value.name;
-			var name = file.replace(".zip","");
-			console.log('formData');
-			console.log(formData);
-			console.log(formData[0].value);
-
-			var folderPath= "templates/"+name;
-			var postData;
-
-
-			myData.append('file',formData[0].value);
-			console.log('myData');
-			console.log(myData);
-		
-
-		}//end check for file
-
-
-
-		function fileUploaded(responseText, statusText, xhr, $form){
-			//$.post("http://192.168.1.30/ttr-template/wp-content/plugins/muse-wordpress/ttr_upload.php", {file: <?php echo $_FILES["fileToUpload"];?>});
-/*			console.log("response text");
-			console.log(responseText);
-			console.log(statusText);
-			console.log(xhr);*/
-			console.log($form);
-			var isCheck;
-			responseText =jQuery.parseJSON(responseText);
-			if(responseText==true){
-				console.log('response=true');
-				var r =confirm("Do you want to replace the old project")
-			     if (r == true) {
-			     	isCheck= true;
-			     } 
-			     else {
-			         isCheck= false;
-			     }; 
-			}
-			if(responseText==false){
-				console.log('response false');
-				isCheck= true;
-			}
-			if(responseText==2 || responseText==3){
-				console.log('response 2 or 3 ='+responseText);
-				isCheck= false;
-			}
-			if(isCheck){
-				var settings = $.ajax({
-					url: 'http://192.168.1.30/ttr-template/wp-content/plugins/muse-wordpress/ttr_upload2.php',
-					type: 'POST',
-					//dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-					data: myData,
-					cache: false,
-				 	contentType: false,
-				 	processData: false,
-
-				});
-			}
-			$form.find("input[type=file]").val("");
-		}
-		
-	</script>
-<div id="dialog-confirm" title="Create a copy ?"></div>
 	<?php
 }
 

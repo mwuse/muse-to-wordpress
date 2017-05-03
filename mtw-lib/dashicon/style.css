@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'mtwicomoon';
+  src:  url('fonts/icomoon.eot?tq044c');
+  src:  url('fonts/icomoon.eot?tq044c#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?tq044c') format('truetype'),
+    url('fonts/icomoon.woff?tq044c') format('woff'),
+    url('fonts/icomoon.svg?tq044c#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#toplevel_page_muse-to-wordpress-setting .wp-menu-image:before
+{
+  font-family: 'mtwicomoon' !important;
+  content: '\e900';
+  color: #FFFFFF !important;
+}
+#toplevel_page_muse-to-wordpress-setting .wp-menu-name
+{
+  color: #FFFFFF !important;
+}
+
+#toplevel_page_muse-to-wordpress-setting:hover .wp-menu-image:before
+{
+  color: #00CC6D !important;
+}
+#toplevel_page_muse-to-wordpress-setting:hover .wp-menu-name
+{
+  color: #00CC6D !important;
+}
+
+#toplevel_page_muse-to-wordpress-setting > a
+{
+  background-color: #00CC6D !important;
+}
+#toplevel_page_muse-to-wordpress-setting:hover > a
+{
+  background-color: #1B1B21 !important;
+}

@@ -68,6 +68,13 @@ function mtw_import_item( $target_dom, $target_container, $item_path )
 	$import->loadHTML( do_shortcode( $itemDom->saveHTML() ) );
 	
 	$nodeToImport = dom_getElementsByClass( $import , "single-item" )->item(0);	
+
+
+	$verticalspacers = dom_getElementsByClass( $import , "verticalspacer" );
+	foreach ( $verticalspacers as $verticalspacer) 
+	{
+		$verticalspacer->parentNode->removeChild($verticalspacer);
+	}
 	
 	$nodeImported = $target_dom->importNode($nodeToImport, true);
 
@@ -149,9 +156,18 @@ function mtw_import_item( $target_dom, $target_container, $item_path )
 				if( preg_match("#.css$#", $link_url) )
 				{
 					$cssContent.= $wp_filesystem->get_contents( $link_url );
+					/*echo "<pre>";
+					print_r( $link_url );*/
 				}
 			}
+			if( $value->tagName == "style" )
+			{
+				$cssContent.=$value->nodeValue;
+				/*echo "<pre>";
+				print_r( $value->nodeValue );*/
+			}
 		}
+		
 		// join unique css
 		$parent_CSS_class = $container_class;
 
@@ -160,17 +176,20 @@ function mtw_import_item( $target_dom, $target_container, $item_path )
 			'#\.html|body#',
 			'#\#page_position_content#',
 			'#\#page#',
-			'#\#muse_css_mq,#'
+			'#\#muse_css_mq#'
 			);
 		$replacement = array(
 			'.'.$parent_CSS_class . ' .position_content',
 			'.'.$parent_CSS_class . ' .position_content',
 			'.'.$parent_CSS_class . ' .single-item',
-			''
+			'.NULL'
 			);
 
 		$cssContent = preg_replace( $pattern, $replacement, $cssContent );
 		
+		/*echo "<pre>";
+		print_r( $cssContent );
+		exit();*/
 
 		$cssDOM = new DOMDocument();
 		$cssDOM->loadHTML( '<div class="item-style" ><style type="text/css">/* item css */' . $cssContent . '</style></div>' );

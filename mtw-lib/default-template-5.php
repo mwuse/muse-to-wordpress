@@ -8,13 +8,10 @@ global $mtw_page;
 global $load_header_mtw;
 global $load_footer_mtw;
 
-/*$load_header = false;
-$load_footer = false;*/
 
 $page = new MusePage;
 $page->init( str_replace( TTR_MW_TEMPLATES_PATH , "", $museUrl ) );
 $mtw_page = $page;
-
 
 
 $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
@@ -23,7 +20,6 @@ $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') 
 $file = str_replace( TTR_MW_PLUGIN_DIR , TTR_MW_PLUGIN_URL , $museUrl );
 
 
-//$folderName = ttr_get_folder_by_template( $museUrl );
 $projectName = $folderName;
 
 //MUSE CONTENT
@@ -88,16 +84,20 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
                                       "!</head></html>$!si"),
                                 "",
                                 restore_html_dom_bug( $head->saveHTML() ) );
+
 	if( $load_header )
 	{
-	echo $wp_head;
+		echo $wp_head;
 	}
 	?>
-
+	<script type="text/javascript">
+    var $ = jQuery;
+    </script>
 </head>
 <body <?php body_class(); ?> >
 
 	<?php
+
 	$mtw_body = new DOMDocument;
 	$mtw_body->loadHTML('<body></body>');
 	merge_child_nodes($mtw_body, "body", $html, "body", 0 );
@@ -117,9 +117,11 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 	}
 	foreach ($to_deletes as $key => $to_delete) 
 	{
-		$nodeImported = $muse_footer->importNode($to_delete, true);
-		$muse_footer_body->appendChild($nodeImported);
-
+		if( strpos( $to_delete->nodeValue, "musecdn2.businesscatalyst") === false && strpos( $to_delete->nodeValue, "scripts/jquery-1.8.3.min.js") === false )
+		{
+			$nodeImported = $muse_footer->importNode($to_delete, true);
+			$muse_footer_body->appendChild($nodeImported);
+		}
 		$to_delete->parentNode->removeChild($to_delete);
 	}
 
@@ -150,6 +152,7 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
                                 restore_html_dom_bug( $body_loaded->saveHTML() ) );
 
 	
+	
 	echo apply_filters( 'body_html_filter', $str_mtw_body);
 	
 	if( $load_footer )
@@ -171,7 +174,7 @@ $html_class = $html->getElementsByTagName('html')->item(0)->getAttribute('class'
 	                	"",
 	                 $muse_footer->saveHTML() );
 	}
-    
+	
 	?>
 </body>
 </html>

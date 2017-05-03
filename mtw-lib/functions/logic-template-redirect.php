@@ -87,14 +87,12 @@ function mtw_logic_template_redirect($html, $fileurl)
 		}
 		$redirect_file = $redirect;
 		$html->loadHTMLFile( $file );
+		do_action( 'DOMDocument_logic_loaded', $html, $file );
 	}
 	else
 	{
 		$redirect_file = false;
 	}
-	
-	
 }
-
 add_action('DOMDocument_loaded', 'mtw_logic_template_redirect', 10, 2 );
 ?>
